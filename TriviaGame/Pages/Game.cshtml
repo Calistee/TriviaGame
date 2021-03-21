@@ -1,0 +1,48 @@
+﻿@page
+@model TriviaGame.Pages.GameModel
+
+
+<div class="border container">
+    @if (Model.GameData.User != null)
+    {
+
+        <div>
+            <p>User Id: @Model.GameData.User.Id</p>
+            <p>@Model.GameData.PlayedCount / @Model.GameData.MaxPlayCount</p>
+            <p>Score: @Model.GameData.User.Score</p>
+
+        </div>
+    }
+    @if (string.IsNullOrEmpty(Model.GameData.Message))
+    {
+        <div>
+            <p class="text-center">@Model.GameData.Question.Text </p>
+        </div>
+        <div>
+            <form method="post">
+
+                <div>
+                    <button asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
+                            asp-route-questionId="@Model.GameData.Question.Id"
+                            asp-route-answerId="@Model.GameData.Question.Answers[0].Id">
+                        @Model.GameData.Question.Answers[0].Text
+                    </button>
+
+                </div>
+                <div>
+                    <button asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
+                            asp-route-questionId="@Model.GameData.Question.Id"
+                            asp-route-answerId="@Model.GameData.Question.Answers[1].Id">
+                        @Model.GameData.Question.Answers[1].Text
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    }
+    else
+    {
+        <p>@Model.GameData.Message</p>
+    }
+</div>
+
