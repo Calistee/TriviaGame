@@ -3,12 +3,11 @@
 
 @if (Model.GameData.User != null)
 {
+
     <div class="container row p-0 m-0">
         <div class="col-6">
-            <div class="col-4">
-                <p>User Id: @Model.GameData.User.Id</p>
+            <p>User Id: @Model.GameData.User.Id</p>
 
-            </div>
         </div>
     </div>
     <div class="container row p-0 m-0">
@@ -23,7 +22,7 @@
 
     </div>
 }
-@if (string.IsNullOrEmpty(Model.GameData.Message))
+@if (string.IsNullOrEmpty(Model.GameData.Message) && Model.GameData.Question != null)
 {
     <div class="container row p-0 m-0">
 
@@ -36,7 +35,6 @@
         <div class="container row p-0 m-0">
 
             <div class="col-6">
-                @*<a asp-page="Create" class="btn btn-info form-control text-white">Create new Book</a>*@
                 <button class="btn btn-info form-control text-white"
                         asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
                         asp-route-questionId="@Model.GameData.Question.Id"
@@ -45,7 +43,6 @@
                 </button>
             </div>
             <div class="col-6">
-                @*<a asp-page="Upsert" class="btn btn-info form-control text-white">Upsert new Book</a>*@
                 <button class="btn btn-info form-control text-white"
                         asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
                         asp-route-questionId="@Model.GameData.Question.Id"
@@ -56,6 +53,32 @@
 
         </div>
     </form>
+    <div class="container row p-0 m-0">
+        <div class="col-12 text-center">
+            @if (TempData.ContainsKey("IsCorrect"))
+            {
+                @if ((string)TempData["IsCorrect"] == "True")
+                {
+                    @*<script>alert("Correct");</script>*@
+                    <div class="alert alert-success" role="alert">
+                        Answer was Right!
+                    </div>
+                }
+                else if ((string)TempData["IsCorrect"] == "False")
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Answer was Wrong!
+                    </div>
+                    @*<script>alert("False");</script>*@
+
+                    @*<h2 class="text-danger"> False  </h2>*@
+
+                }
+            }
+
+
+        </div>
+    </div>
 }
 else
 {
