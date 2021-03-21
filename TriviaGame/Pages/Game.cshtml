@@ -1,48 +1,66 @@
 ﻿@page
 @model TriviaGame.Pages.GameModel
 
+@if (Model.GameData.User != null)
+{
+    <div class="container row p-0 m-0">
+        <div class="col-6">
+            <div class="col-4">
+                <p>User Id: @Model.GameData.User.Id</p>
 
-<div class="border container">
-    @if (Model.GameData.User != null)
-    {
-
-        <div>
-            <p>User Id: @Model.GameData.User.Id</p>
+            </div>
+        </div>
+    </div>
+    <div class="container row p-0 m-0">
+        <div class="col-6">
             <p>@Model.GameData.PlayedCount / @Model.GameData.MaxPlayCount</p>
+
+        </div>
+        <div class="col-6 text-right">
             <p>Score: @Model.GameData.User.Score</p>
 
         </div>
-    }
-    @if (string.IsNullOrEmpty(Model.GameData.Message))
-    {
-        <div>
-            <p class="text-center">@Model.GameData.Question.Text </p>
+
+    </div>
+}
+@if (string.IsNullOrEmpty(Model.GameData.Message))
+{
+    <div class="container row p-0 m-0">
+
+        <div class="col-12 text-center">
+            <h2>@Model.GameData.Question.Text </h2>
+
         </div>
-        <div>
-            <form method="post">
+    </div>
+    <form method="post">
+        <div class="container row p-0 m-0">
 
-                <div>
-                    <button asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
-                            asp-route-questionId="@Model.GameData.Question.Id"
-                            asp-route-answerId="@Model.GameData.Question.Answers[0].Id">
-                        @Model.GameData.Question.Answers[0].Text
-                    </button>
+            <div class="col-6">
+                @*<a asp-page="Create" class="btn btn-info form-control text-white">Create new Book</a>*@
+                <button class="btn btn-info form-control text-white"
+                        asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
+                        asp-route-questionId="@Model.GameData.Question.Id"
+                        asp-route-answerId="@Model.GameData.Question.Answers[0].Id">
+                    @Model.GameData.Question.Answers[0].Text
+                </button>
+            </div>
+            <div class="col-6">
+                @*<a asp-page="Upsert" class="btn btn-info form-control text-white">Upsert new Book</a>*@
+                <button class="btn btn-info form-control text-white"
+                        asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
+                        asp-route-questionId="@Model.GameData.Question.Id"
+                        asp-route-answerId="@Model.GameData.Question.Answers[1].Id">
+                    @Model.GameData.Question.Answers[1].Text
+                </button>
+            </div>
 
-                </div>
-                <div>
-                    <button asp-page-handler="AnswerQuestion" asp-route-userId="@Model.User_Id"
-                            asp-route-questionId="@Model.GameData.Question.Id"
-                            asp-route-answerId="@Model.GameData.Question.Answers[1].Id">
-                        @Model.GameData.Question.Answers[1].Text
-                    </button>
-
-                </div>
-            </form>
         </div>
-    }
-    else
-    {
-        <p>@Model.GameData.Message</p>
-    }
-</div>
+    </form>
+}
+else
+{
+    <p>@Model.GameData.Message</p>
+}
+
+
 
